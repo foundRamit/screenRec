@@ -13,3 +13,4 @@ C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-wind
 C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.pdb
 C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.genruntimeconfig.cache
 C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ref\ScreenRecorderApp.dll
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.sourcelink.json

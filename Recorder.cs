@@ -9,48 +9,97 @@ namespace ScreenRecorderApp
     {
         private Process ffmpegProcess;
         private string outputPath;
-        private readonly string ffmpegPath = Path.Combine("FFmpeg", "ffmpeg.exe");
+        private string logPath;
         private string recordingsFolder;
+        private readonly string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg", "ffmpeg.exe");
+
+        public event EventHandler<string> RecorderStatusChanged;
+
+        private void UpdateStatus(string message)
+        {
+            RecorderStatusChanged?.Invoke(this, message);
+        }
 
         public void StartRecording()
         {
-            if (ffmpegProcess != null && !ffmpegProcess.HasExited) return;
+            if (!File.Exists(ffmpegPath))
+            {
+                MessageBox.Show("FFmpeg not found at: " + ffmpegPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("FFmpeg not found");
+                return;
+            }
 
-            // Setup Desktop\Recordings folder
+            if (ffmpegProcess != null && !ffmpegProcess.HasExited)
+                return;
+
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             recordingsFolder = Path.Combine(desktopPath, "Recordings");
             Directory.CreateDirectory(recordingsFolder);
 
-            // Timestamp-based file name
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             outputPath = Path.Combine(recordingsFolder, $"recording_{timestamp}.mp4");
+            logPath = Path.Combine(recordingsFolder, $"ffmpeg_log_{timestamp}.txt");
 
-            // Launch ffmpeg with video + audio (change audio device if needed)
             ffmpegProcess = new Process();
             ffmpegProcess.StartInfo.FileName = ffmpegPath;
-            ffmpegProcess.StartInfo.Arguments = $"-y -f gdigrab -framerate 30 -i desktop -f dshow -i audio=\"virtual-audio-capturer\" -c:v libx264 -preset ultrafast -c:a aac -b:a 128k \"{outputPath}\"";
+            ffmpegProcess.StartInfo.Arguments = $"-y -f gdigrab -framerate 30 -i desktop -video_size 1280x720 -draw_mouse 1 -c:v libx264 -preset ultrafast -tune zerolatency -crf 23 \"{outputPath}\"";
+            ffmpegProcess.StartInfo.RedirectStandardError = true;
             ffmpegProcess.StartInfo.UseShellExecute = false;
             ffmpegProcess.StartInfo.CreateNoWindow = true;
-            ffmpegProcess.Start();
+
+            try
+            {
+                ffmpegProcess.ErrorDataReceived += (s, e) =>
+                {
+                    if (!string.IsNullOrEmpty(e.Data))
+                        File.AppendAllText(logPath, e.Data + Environment.NewLine);
+                };
+
+                bool started = ffmpegProcess.Start();
+                if (started)
+                {
+                    ffmpegProcess.BeginErrorReadLine();
+                    UpdateStatus("Recording...");
+                }
+                else
+                {
+                    UpdateStatus("Failed to start recording.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error starting FFmpeg:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Error starting recording.");
+            }
         }
 
         public void PauseRecording()
         {
-            // FFmpeg doesn't support real pause from CLI — implement chunked recording if needed
+            // FFmpeg does not support pause, so we just update the UI
+            UpdateStatus("Paused (Note: FFmpeg doesn't support real pause)");
         }
 
         public void StopRecording()
         {
             if (ffmpegProcess != null && !ffmpegProcess.HasExited)
             {
-                ffmpegProcess.Kill(true);
-                ffmpegProcess.WaitForExit();
-                ffmpegProcess = null;
+                try
+                {
+                    ffmpegProcess.Kill(true);
+                    ffmpegProcess.WaitForExit();
+                    ffmpegProcess = null;
 
-                MessageBox.Show("Recording saved to Desktop\\Recordings", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Process.Start("explorer.exe", recordingsFolder);
+                    UpdateStatus("Stopped");
+
+                    MessageBox.Show("Recording saved to: " + outputPath, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start("explorer.exe", recordingsFolder);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error stopping FFmpeg:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UpdateStatus("Error stopping recording.");
+                }
             }
         }
     }
 }
-// testing
