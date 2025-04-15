@@ -1,0 +1,15 @@
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\FFmpeg\ffmpeg.exe
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\ScreenRecorderApp.exe
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\ScreenRecorderApp.deps.json
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\ScreenRecorderApp.runtimeconfig.json
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\ScreenRecorderApp.dll
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\bin\Debug\net6.0-windows\ScreenRecorderApp.pdb
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.AssemblyInfoInputs.cache
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.AssemblyInfo.cs
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.csproj.CoreCompileInputs.cache
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.dll
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\refint\ScreenRecorderApp.dll
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.pdb
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ScreenRecorderApp.genruntimeconfig.cache
+C:\Users\tapar\Desktop\ScreenRecorderApp\ScreenRecorderApp\obj\Debug\net6.0-windows\ref\ScreenRecorderApp.dll
